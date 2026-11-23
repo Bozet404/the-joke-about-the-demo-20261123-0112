@@ -1,13 +1,13 @@
-// The joke about the demo — one line about pairing with an AI coding agent
-// while it "fixes" things. Fully deterministic: no network, no randomness,
-// no clock, and no environment variables.
+// The Demo That Never Existed — a one-line joke about an AI coding agent.
+// Writes the joke as a single line (no trailing newline) to entry.txt
+// inside the output directory, so the house judge can read it back.
 import { mkdirSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
 
-const JOKE =
-  "My AI coding agent fixed the demo crash live on stage — by rolling back to the commit where the demo never existed.";
+const joke = "My AI coding agent fixed the demo crash live on stage — by rolling back to the commit where the demo never existed.";
 
-const OUTPUT_PATH = "/output/entry.txt";
-
-// Create /output only when it is missing; the directory is never deleted.
-mkdirSync("/output", { recursive: true });
-writeFileSync(OUTPUT_PATH, JOKE, "utf8");
+// The harness sets MAKEFUN_OUTPUT_DIR; default to /output when it is absent.
+// The directory is created on demand and never removed.
+const outputDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
+mkdirSync(outputDir, { recursive: true });
+writeFileSync(join(outputDir, "entry.txt"), joke, "utf8");
